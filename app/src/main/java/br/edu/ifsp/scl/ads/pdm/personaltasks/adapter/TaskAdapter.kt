@@ -1,72 +1,51 @@
 package br.edu.ifsp.scl.bes.prdm.tasklist.adapter
 
+import android.content.Context
+import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import br.edu.ifsp.scl.ads.pdm.personaltasks.R
 import br.edu.ifsp.scl.ads.pdm.personaltasks.databinding.TileTaskBinding
 import br.edu.ifsp.scl.ads.pdm.personaltasks.model.Task
-import br.edu.ifsp.scl.ads.pdm.personaltasks.ui.OnClickTaskListener
 import java.time.format.DateTimeFormatter
-import br.edu.ifsp.scl.ads.pdm.personaltasks.R
 
-class TaskRvAdapter(
-    private val taskList: MutableList<Task>,
-    private val onTaskClickListener: OnClickTaskListener
-) : RecyclerView.Adapter<TaskRvAdapter.TaskViewHolder>() {
-
-    inner class TaskViewHolder(ttb: TileTaskBinding) : RecyclerView.ViewHolder(ttb.root) {
-        val titleTv: TextView = ttb.titleTv
-        val dueDateTv: TextView = ttb.dueDateTv
-
-        init {
-            // Menu de contexto (clique longo)
-            ttb.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
-                (onTaskClickListener as AppCompatActivity).menuInflater.inflate(R.menu.context_menu_main, menu)
-
-                menu.findItem(R.id.edit_task).setOnMenuItemClickListener {
-                    onTaskClickListener.onEditTaskMenuItemClick(adapterPosition)
-                    true
-                }
-
-                menu.findItem(R.id.remove_task).setOnMenuItemClickListener {
-                    onTaskClickListener.onRemoveTaskMenuItemClick(adapterPosition)
-                    true
-                }
-            }
-
-            // Clique curto na célula
-            ttb.root.setOnClickListener {
-                onTaskClickListener.onTaskClick(adapterPosition)
-            }
-        }
-    }
-
-    // Chamado somente quando um novo holder (e consequentemente uma nova célula) precisa ser criado.
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TaskViewHolder = TaskViewHolder(
-        TileTaskBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-    )
-
-    // Chamado sempre que os dados de um holder (ou seja, da célula) precisam ser preenchidos ou trocados.
-    override fun onBindViewHolder(
-        holder: TaskViewHolder,
-        position: Int
+class TaskAdapter(context: Context, private val taskList: MutableList<Task>) :
+    ArrayAdapter<Task>(
+        context,
+        R.layout.tile_task,
+        taskList
     ) {
-        taskList[position].let { task ->
-            with(holder) {
-                titleTv.text = task.title
-                dueDateTv.text = task.dueDate?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        // Recuperar a task que será usada para preencher os dados da célula
+        val task = taskList[position]
+
+        // Verificar se existe uma célula reciclada ou se é necessário inflar uma nova
+        var taskTileView = convertView
+        if (taskTileView == null) {
+            // Infla uma nova célula
+            TileTaskBinding.inflate(
+                context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater,
+                parent,
+                false
+            ).apply {
+                val tileTaskViewHolder = TileTaskViewHolder(titleTv, dueDateTv)
+                taskTileView = root
+                (taskTileView as LinearLayout).tag = tileTaskViewHolder
             }
         }
+
+        // Preencher a célula com os dados da task
+        val viewHolder = taskTileView?.tag as TileTaskViewHolder
+        viewHolder.titleTv.text = task.title
+        viewHolder.dueDateTv.text = task.dueDate?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+
+        // Devolver a célula preenchida para o ListView
+        return taskTileView as View
     }
 
-    override fun getItemCount(): Int = taskList.size
+    private data class TileTaskViewHolder(val titleTv: TextView, val dueDateTv: TextView)
 }
