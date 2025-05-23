@@ -88,9 +88,10 @@ class TaskSQLite(context: Context): TaskDAO {
 
     override fun deleteTask(id: Int) = taskDatabase.delete(
         TASK_TABLE,
-        "WHERE $ID_COLUMN = ?",
+        "$ID_COLUMN = ?",  // Remove o "WHERE"
         arrayOf(id.toString())
     )
+
 
     private fun Task.toContentValues() = ContentValues().apply {
         put(ID_COLUMN, id)

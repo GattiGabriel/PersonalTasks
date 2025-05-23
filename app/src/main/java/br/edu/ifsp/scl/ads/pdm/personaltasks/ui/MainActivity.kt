@@ -3,6 +3,7 @@ package br.edu.ifsp.scl.ads.pdm.personaltasks.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -103,11 +104,24 @@ class MainActivity : AppCompatActivity(), OnClickTaskListener {
     }
 
     override fun onRemoveTaskMenuItemClick(position: Int) {
-        mainController.removeTask(taskList[position].id!!)
-        taskList.removeAt(position)
-        taskAdapter.notifyItemRemoved(position)
-        Toast.makeText(this, "Task removed!", Toast.LENGTH_SHORT).show()
+        try {
+            val task = taskList[position]
+            val id = task.id
+            if (id != null) {
+                mainController.removeTask(id)
+                taskList.removeAt(position)
+                taskAdapter.notifyItemRemoved(position)
+                Toast.makeText(this, "Task removed!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Erro: Task ID inválido", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Erro ao remover tarefa: ${e.message}", Toast.LENGTH_LONG).show()
+            Log.e("TaskDeleteError", "Erro ao deletar tarefa", e)
+        }
     }
+
+
 
     override fun onEditTaskMenuItemClick(position: Int) {
         Intent(this, TaskActivity::class.java).apply {
