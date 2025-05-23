@@ -10,6 +10,7 @@ import br.edu.ifsp.scl.ads.pdm.personaltasks.model.Task
 import br.edu.ifsp.scl.ads.pdm.personaltasks.ui.OnClickTaskListener
 import java.time.format.DateTimeFormatter
 import br.edu.ifsp.scl.ads.pdm.personaltasks.R
+import org.w3c.dom.Text
 
 class TaskRvAdapter(
     private val taskList: MutableList<Task>,
@@ -19,6 +20,7 @@ class TaskRvAdapter(
     inner class TaskViewHolder(ttb: TileTaskBinding) : RecyclerView.ViewHolder(ttb.root) {
         val titleTv: TextView = ttb.titleTv
         val dueDateTv: TextView = ttb.dueDateTv
+        val descriptionTv: TextView = ttb.descriptionTv
 
         init {
             // Menu de contexto (clique longo)
@@ -64,6 +66,7 @@ class TaskRvAdapter(
             with(holder) {
                 titleTv.text = task.title
                 dueDateTv.text = task.dueDate?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                descriptionTv.text = task.description
             }
         }
     }
