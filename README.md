@@ -13,3 +13,5 @@ Conta com as seguintes funcionalidades:
 - Editar Tarefa: A opção de Editar tem o mesmo comportamento que a opção de Detalhes, porém com a possibilidade de editar os campos livremente. Ao clicar no botão Salvar, os dados são sobrescritos, caso sejam mudados, retornando assim o usuário para a tela inicial, onde os dados editados já estão disponíveis, e ao clicar no botão Cancelar, o usuário retorna para a tela inicial.
 
 - Excluir Tarefa: A opção de Excluir remove os dados de determinada tarefa do banco e retira o card relacionado a ela da tela inicial.
+
+Vídeo tutorial da execução do projeto: https://drive.google.com/file/d/1JDfbMbj6DMZEykB0C-P7_wegRtKcnGv5/view?usp=sharing
