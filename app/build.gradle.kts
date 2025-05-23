@@ -8,6 +8,10 @@ android {
     namespace = "br.edu.ifsp.scl.ads.pdm.personaltasks"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "br.edu.ifsp.scl.ads.pdm.personaltasks"
         minSdk = 26
