@@ -33,7 +33,7 @@
         <EditText
             android:id="@+id/description_et"
             android:ems="10"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="textNoSuggestions|textMultiLine"
             android:hint="Descrição"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
