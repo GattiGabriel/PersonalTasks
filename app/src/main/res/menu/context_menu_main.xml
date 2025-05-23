@@ -8,7 +8,4 @@
         android:id="@+id/remove_task"
         android:title="Excluir tarefa"/>
 
-    <item
-        android:id="@+id/detail_task"
-        android:title="Detalhes"/>
 </menu>
