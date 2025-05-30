@@ -21,6 +21,7 @@ class TaskRvAdapter(
         val titleTv: TextView = ttb.titleTv
         val dueDateTv: TextView = ttb.dueDateTv
         val descriptionTv: TextView = ttb.descriptionTv
+        val statusTv: TextView = ttb.statusTv
 
         init {
             // Menu de contexto (clique longo)
@@ -67,6 +68,7 @@ class TaskRvAdapter(
                 titleTv.text = task.title
                 dueDateTv.text = task.dueDate?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 descriptionTv.text = task.description
+                statusTv.text = task.status
             }
         }
     }

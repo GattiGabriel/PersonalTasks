@@ -10,5 +10,6 @@ data class Task(
     var id: Int? = INVALID_TASK_ID,
     var title: String = "",
     var description: String = "",
-    var dueDate: LocalDate? = null
+    var dueDate: LocalDate? = null,
+    var status: String = "Incompleto"
 ): Parcelable

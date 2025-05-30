@@ -38,6 +38,10 @@ class TaskActivity : AppCompatActivity() {
                 val today = LocalDate.now()
                 val date = it.dueDate ?: today
 
+                completeTaskBt.setOnClickListener {
+                    statusTv.setText("Tarefa Completa")
+                }
+
                 dueDateDp.updateDate(
                     date.year,
                     date.monthValue - 1,
@@ -68,7 +72,8 @@ class TaskActivity : AppCompatActivity() {
                     receivedTask?.id?:hashCode(),
                     titleEt.text.toString(),
                     descriptionEt.text.toString(),
-                    dueDate
+                    dueDate,
+                    statusTv.text.toString(),
                 ).let { task ->
                     Intent().apply {
                         putExtra(EXTRA_TASK, task)

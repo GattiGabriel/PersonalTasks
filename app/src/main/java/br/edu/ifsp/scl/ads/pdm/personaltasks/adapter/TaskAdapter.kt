@@ -32,7 +32,7 @@ class TaskAdapter(context: Context, private val taskList: MutableList<Task>) :
                 parent,
                 false
             ).apply {
-                val tileTaskViewHolder = TileTaskViewHolder(titleTv, dueDateTv)
+                val tileTaskViewHolder = TileTaskViewHolder(titleTv, dueDateTv, statusTv)
                 taskTileView = root
                 (taskTileView as LinearLayout).tag = tileTaskViewHolder
             }
@@ -42,10 +42,15 @@ class TaskAdapter(context: Context, private val taskList: MutableList<Task>) :
         val viewHolder = taskTileView?.tag as TileTaskViewHolder
         viewHolder.titleTv.text = task.title
         viewHolder.dueDateTv.text = task.dueDate?.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        viewHolder.statusTv.text = task.status
 
         // Devolver a célula preenchida para o ListView
         return taskTileView as View
     }
 
-    private data class TileTaskViewHolder(val titleTv: TextView, val dueDateTv: TextView)
+    private data class TileTaskViewHolder(
+        val titleTv: TextView,
+        val dueDateTv: TextView,
+        val statusTv: TextView
+    )
 }

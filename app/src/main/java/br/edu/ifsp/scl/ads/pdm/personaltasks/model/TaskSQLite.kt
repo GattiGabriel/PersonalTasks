@@ -18,12 +18,14 @@ class TaskSQLite(context: Context): TaskDAO {
         private val TITLE_COLUMN = "title"
         private val DESCRIPTION_COLUMN = "description"
         private val DUE_DATE_COLUMN = "dueDate"
+        private val STATUS_COLUM = "status"
 
         val CREATE_TASK_TABLE_STATEMENT = "CREATE TABLE IF NOT EXISTS $TASK_TABLE ( " +
                 "$ID_COLUMN INTEGER NOT NULL PRIMARY KEY, " +
                 "$TITLE_COLUMN TEXT NOT NULL, " +
                 "$DESCRIPTION_COLUMN TEXT NOT NULL, " +
-                "$DUE_DATE_COLUMN TEXT NOT NULL );"
+                "$DUE_DATE_COLUMN TEXT NOT NULL, " +
+                "$STATUS_COLUM TEXT NOT NULL );"
     }
 
     // Criando uma instância de SQLite
@@ -98,12 +100,14 @@ class TaskSQLite(context: Context): TaskDAO {
         put(TITLE_COLUMN, title)
         put(DESCRIPTION_COLUMN, description)
         put(DUE_DATE_COLUMN, dueDate.toString())
+        put(STATUS_COLUM, status)
     }
 
     private fun Cursor.toTask() = Task(
         getInt(getColumnIndexOrThrow(ID_COLUMN)),
         getString(getColumnIndexOrThrow(TITLE_COLUMN)),
         getString(getColumnIndexOrThrow(DESCRIPTION_COLUMN)),
-        LocalDate.parse(getString(getColumnIndexOrThrow(DUE_DATE_COLUMN)))
+        LocalDate.parse(getString(getColumnIndexOrThrow(DUE_DATE_COLUMN))),
+        getString(getColumnIndexOrThrow(STATUS_COLUM))
     )
 }
